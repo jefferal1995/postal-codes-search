@@ -26,7 +26,7 @@ PostalCodesSearch.find('Y1A')
 
 Using rails, you can load all the values in a initializer
 ```ruby
-# config/initializers/load_zip_codes.rb
+# config/initializers/postal_codes.rb
 PostalCodesSearch.load unless Rails.env.development?
 ```
 
