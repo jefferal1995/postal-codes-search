@@ -6,7 +6,7 @@ Gem to obtain postal codes for US and CA only.
 
 Add this line to your application's Gemfile:
 
-    gem 'postal-codes-search', '~> 1.0', '>= 1.0.1'
+    gem 'postal-codes-search', '~> 1.1'
 
 And then execute:
 

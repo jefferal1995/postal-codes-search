@@ -4,7 +4,7 @@ require 'yaml'
 
 # Class module that handles all searching methods for postal codes
 module PostalCodesSearch
-  VERSION = '1.0.1'
+  VERSION = '1.1'
 
   class << self
     SUPPORTED_COUNTRIES = %i[us ca].freeze
@@ -13,13 +13,17 @@ module PostalCodesSearch
       !(attr.nil? || attr.empty?)
     end
 
-    def find_by(code: nil, country:  nil, county: nil, city: nil, state: nil)
+    def selectable?(term, value)
+      attribute_present(term) && value && value.to_s.downcase.include?(term.to_s.downcase)
+    end
+
+    def find_by(code: nil, country: nil, county: nil, city: nil, state: nil)
       data_source.select do |postal_code|
-        (attribute_present(code) && postal_code['postal_code'] && postal_code['postal_code'].to_s.include?(code)) ||
-          (attribute_present(country) && postal_code['country'] && postal_code['country'].to_s.include?(country)) ||
-          (attribute_present(county) && postal_code['county'] && postal_code['county'].to_s.include?(county)) ||
-          (attribute_present(city) && postal_code['city'] && postal_code['city'].to_s.include?(city)) ||
-          (attribute_present(state) && postal_code['state'] && postal_code['state'].to_s.include?(state))
+        selectable?(code, postal_code['postal_code']) ||
+          selectable?(country, postal_code['country']) ||
+          selectable?(county, postal_code['county']) ||
+          selectable?(city, postal_code['city']) ||
+          selectable?(state, postal_code['state'])
       end
     end
 
